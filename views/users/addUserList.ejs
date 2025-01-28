@@ -1,0 +1,122 @@
+
+<%- include("../partials/header.ejs");%>
+
+<div class="addUser-container">
+  <h2>Add User</h2>
+  <div class="rightContainer">
+    <a href="#" onclick="window.location.href=document.referrer;" class="rightbutton">Back</a>
+  </div>
+
+  <form action="/createUser" method="POST" enctype="multipart/form-data">
+    <h4>ID:</h4>
+    <input type="text" name="UserId" required />
+    <h4>Images:</h4>
+    <input type="text" name="UserImage" required />
+    <h4>Name:</h4>
+    <input type="file" name="UserName" required />
+
+    <h4>email:</h4>
+    <input type="file" name="UserEmail" required />
+    <h4>Role:</h4>
+    <input type="file" name="UserRole" required />
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+<style>
+  h1 {
+    text-align: left;
+  }
+  .rightContainer {
+    margin-left: 50%;
+    background-color: grey;
+    color: black;
+    padding: 0.5rem 1.5rem;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+  .rightbutton {
+    color: white;
+    text-decoration: none;
+    width: 60px;
+    font-size: 1.4rem;
+  }
+  .addUser-container {
+    margin-top: 20px;
+    margin-left: 100px;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 70%;
+    height: 70%;
+    text-align: center;
+    
+  }
+
+  .addUser-container h1 {
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    color: #333;
+  }
+
+  .addUser-container input {
+    width: 80%;
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 1rem;
+  }
+
+  .addUser-container input:focus {
+    outline: none;
+    border-color:green;
+  }
+
+  .addUser-container button {
+    margin-left: auto;
+    background: green;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 4.5rem;
+    border-radius: 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .addUser-container button:hover {
+    background: #2575fc;
+    
+  }
+
+  @media (max-width: 600px) {
+    .addUser-container {
+      padding: 1.5rem;
+    }
+
+    .addUser-container h1 {
+      font-size: 1.5rem;
+    }
+
+    .addUser-container input {
+      padding: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .addUser-container button {
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+    }
+  }
+
+  h4 {
+    text-align: left;
+  }
+</style>
+
+<%- include("../partials/footer.ejs");%>

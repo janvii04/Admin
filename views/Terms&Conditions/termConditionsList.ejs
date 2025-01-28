@@ -1,0 +1,140 @@
+<%- include("../partials/header");%>
+
+<div class="terms">
+  <a href="/dashboard"> DashBoard</a>
+</div>
+
+<div class="dashboard">
+  <!-- <div class="bread">
+    <a href="/dashboard"> DashBoard</a>
+
+  </div> -->
+
+  <h1>Terms & Conditions</h1>
+
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input type="text" id="title" value="Terms & Conditions" />
+  </div>
+
+  <div class="form-group">
+    <label for="description">Description</label>
+    <div class="toolbar">
+      <button>B</button>
+      <button>I</button>
+      <button>U</button>
+      <button>Left</button>
+      <button>Center</button>
+      <button>Right</button>
+    </div>
+    <textarea id="description">
+A Terms and Conditions agreement acts as a legal contract between you (the company) and the user. 
+ It's where you maintain your rights to exclude users from your app in the event that they  abuse your website/app, 
+set out the rules for using your service and note other important details and disclaimers.
+Having a Terms and Conditions agreement is completely optional. 
+No laws require you to have one. 
+Not even the super-strict and wide-reaching General Data Protection Regulation (GDPR).
+ Your Terms and Conditions agreement will be uniquely yours. 
+ While some clauses are standard and commonly seen in pretty much every Terms and Conditions agreement, 
+ it's up to you to set the rules and guidelines that the user must agree to.
+Terms and Conditions agreements are also known as Terms of Service or Terms of Use agreements. 
+ these terms are interchangeable, practically speaking. More rarely, it may be called something like an End User Services Agreement (EUSA).
+            </textarea
+    >
+  </div>
+</div>
+
+<style>
+  /* body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+
+  .dashboard {
+    max-width: px;
+    margin: 0 auto;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  } */
+
+  .terms {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 20px;
+    text-align: right;
+  }
+
+  .dashboard h1 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+  }
+
+  .form-group input[type="text"],
+  .form-group textarea,
+  .form-group select {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    color: #333;
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    height: 150px;
+  }
+
+  .toolbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .toolbar button {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #f4f4f4;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #333;
+  }
+
+  .toolbar button:hover {
+    background: #eaeaea;
+  }
+
+  /* .bread {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 20px;
+  }
+
+  .bread a {
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  .bread a:hover {
+    text-decoration: underline;
+  } */
+</style>
+<%- include("../partials/footer");%>

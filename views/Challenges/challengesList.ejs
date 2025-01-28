@@ -1,0 +1,106 @@
+
+<%- include("../partials/header.ejs");%>
+
+<div class="site">
+  <a href="/dashboard"> DashBoard</a> 
+</div>
+
+<center><h1>Challenges</h1></center>
+
+<div class="challenges-table"> 
+  <table>
+    <div class="add">
+      <a href="/addChallenge" class="add-challenge">+ Add Challenge</a>
+    </div>
+    <thead>
+      <tr>
+        <th>Sr</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% challenges.forEach((challenge, index) => { %>
+        <tr>
+          <td><%= index + 1 %></td>
+          <td><%= challenge.title %></td>
+          <td><%= challenge.description %></td>
+          <td>
+            <button class="delete-btn" id="<%= challenge.id %>">
+              <i class="fas fa-trash"></i> Delete
+            </button>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</div>
+
+<!-- <script src="https://code.jquery.com/jquery-3.6.3.min.js" 
+        integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" 
+        crossorigin="anonymous"></script> -->
+
+
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+  integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" 
+  crossorigin="anonymous"></script>
+
+
+
+<!-- <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.delete-btn').forEach((button) => {
+      button.addEventListener('click', function () {
+        if (confirm('Are you sure you want to delete this item?')) {
+          const row = this.closest('tr');
+          if (row) {
+            $.ajax({
+              url: `/deleteChallenges/${button.id}`,
+              method: 'DELETE',
+              success: function(result) {
+                if (result.status === 200) {
+                  window.location.reload();
+                } else {
+                  alert('Failed to delete. Please try again.');
+                }
+              },
+              error: function(err) {
+                console.error('Error deleting the challenge:', err);
+                alert('An error occurred. Please try again later.');
+              }
+            });
+          } else {
+            console.error('No row found to delete.');
+          }
+        }
+      });
+    });
+  });
+</script> -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.delete-btn').forEach((button) => {
+      button.addEventListener('click', function () {
+        if (confirm('Are you sure you want to delete this item?')) {
+          const row = this.closest('tr'); 
+          if (row) {
+            // row.remove(); 
+            $.ajax({
+          url: `/deleteChallenges/${button.id}`,
+          type: 'delete',
+          success: function(result) {
+           if(result.status == 200){
+             window.location.reload()
+           }
+          }
+        })
+          } else {
+            console.error('No row found to delete.');
+          }
+        }
+      });
+    });
+  });
+</script>
+<%- include("../partials/footer.ejs");%>

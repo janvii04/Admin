@@ -1,0 +1,231 @@
+<%- include("../partials/header.ejs");%>
+
+
+<div class="website">
+  <a href="/dashboard"> DashBoard</a> 
+
+ </div>
+
+  <div class="container">
+    <h1>Contact Us</h1>
+    <div class="challenges-table"> 
+
+    <div class="table-controls">
+      <div>
+        <label for="entries">Show 
+          <select id="entries">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>
+            <option value="24">24</option>
+            <option value="28">28</option>
+            <option value="26">26</option>
+            <option value="27">27</option>
+            <option value="29">29</option>
+            <option value="30">30</option>
+
+          </select>
+          entries
+        </label>
+      </div>
+      <div>
+        <label for="search">Search: 
+          <input type="text" id="search" placeholder="Type to search...">
+        </label>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>S. No.</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Message</th>
+          <th>Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Janvi</td>
+          <td>janvi@gmail.com</td>
+          <td>This is a test message for testing purposes</td>
+          <td>Dec 25, 2024</td>
+          <td><button class="delete-btn">🗑</button></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Jinu</td>
+          <td>jinu@gmail.com</td>
+          <td>This is a test message</td>
+          <td>Dec 25, 2024</td>
+          <td><button class="delete-btn">🗑</button></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>gulshan</td>
+          <td>gulshan@gmail.com</td>
+          <td>This is a test message</td>
+          <td>Dec 25, 2024</td>
+          <td><button class="delete-btn">🗑</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="table-footer">
+      <span>Showing 1 to 3 of 3 entries</span>
+      <div class="pagination">
+        <button>Previous</button>
+        <button>1</button>
+        <button>Next</button>
+      </div>
+    </div>
+  </div>
+
+  
+
+
+    <!-- <script>
+        const form = document.getElementById('contactForm');
+        const successMessage = document.getElementById('successMessage');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            successMessage.style.display = 'block';
+            form.reset();
+        });
+    </script> -->
+<style>
+
+    /* *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+     */
+    /* body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      padding: 20px;
+    } */
+    
+    /* .container {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    } */
+    .website {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 20px;
+    text-align: right;
+  }
+    
+    h1 {
+      margin-bottom: 20px;
+      color: #333;
+      text-align: center;
+    }
+    
+    .table-controls {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    
+    .table-controls label {
+      font-size: 14px;
+      color: #555;
+    }
+    
+    input[type="text"],
+    select {
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 10px;
+    }
+    
+    thead th {
+      background-color: #f4f4f9;
+      color: #555;
+      padding: 10px;
+      text-align: left;
+      font-size: 14px;
+    }
+    
+    tbody td {
+      padding: 10px;
+      border-top: 1px solid #eee;
+    }
+    
+    tbody tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    
+    .delete-btn {
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      padding: 5px 10px;
+    }
+    
+    .delete-btn:hover {
+      background-color: #ff3333;
+    }
+    
+    .table-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+    }
+    
+    .pagination button {
+      padding: 5px 10px;
+      margin: 0 5px;
+      border: 1px solid #ddd;
+      background-color: #f4f4f4;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    
+    .pagination button:hover {
+      background-color: #ddd;
+    }
+    
+</style>
+
+<%- include("../partials/footer.ejs");%>
