@@ -36,4 +36,32 @@ module.exports = {
             return null;
         }
     },
+
+    imageUpload: async (file, folder = "Users") => {
+        try {
+            if (!file || !file.name) return null;
+
+            const fileExtension = file.name.split(".").pop().toLowerCase();
+
+            // Generate a unique file name
+            const name = `${uuid()}.${fileExtension}`;
+            const filePath = path.join(__dirname, "..", "public", folder, name);
+
+            // Ensure the folder exists
+            const dirPath = path.dirname(filePath);
+            if (!fs.existsSync(dirPath)) {
+                fs.mkdirSync(dirPath, { recursive: true });
+            }
+
+            // Move the file to the destination
+            await file.mv(filePath);
+
+            // Return the relative path to the uploaded file
+            return `/${folder}/${name}`;
+        } catch (error) {
+            console.error("Error during file upload:", error);
+            return null;
+        }
+    },
+
 };

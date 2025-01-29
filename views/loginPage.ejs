@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Page</title>
+  </head>
+  <body>
+    <div class="login-container">
+      <div class="card-header">Admin Login</div>
+      <form action="/dashboard" method="GET">
+        <h3>Email:</h3>
+        <input type="text" name="username" required />
+        <h3>Password:</h3>
+        <input type="password" name="password" required />
+        <br />
+        <br />
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  </body>
+</html>
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(red, #a890fe, #ffffff);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: #333;
+    padding: 1rem;
+  }
+
+  @keyframes gradientBG {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .login-container {
+    background:white;
+    padding: 5rem;
+    border-radius: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+  }
+
+  .login-container h1 {
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    color: #333;
+  }
+
+  .login-container input {
+    width: 100%;
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 1rem;
+  }
+
+  .login-container input:focus {
+    outline: none;
+    border-color: #6a11cb;
+  }
+
+  .login-container button {
+    background: #6a11cb;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 4.5rem;
+    border-radius: 20px;
+    font-size: 1rem;
+    /* cursor: pointer; */
+    transition: background 0.3s;
+  }
+
+  .login-container button:hover {
+    background: #2575fc;
+  }
+
+  .login-container p {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #666;
+  }
+
+  .login-container p a {
+    color: #6a11cb;
+    text-decoration: none;
+  }
+
+  .login-container p a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 600px) {
+    .login-container {
+      padding: 1.5rem;
+    }
+
+    .login-container h1 {
+      font-size: 1.5rem;
+    }
+
+    .login-container input {
+      padding: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .login-container button {
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    .login-container p {
+      font-size: 0.8rem;
+    }
+  }
+
+  h3 {
+    text-align: left;
+  }
+
+  .card-header {
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+    color: black;
+
+  }
+  .card-header {
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 30px;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  }
+</style>

@@ -2,6 +2,15 @@ const Models = require("../models/index");
 const helper = require("../helpers/fileUpload");
 
 module.exports = {
+
+logIn: async (req,res)=>{
+  try {
+    res.render("loginPage");
+  } catch (error) {
+    throw error;
+  }
+},
+
   signUp: async (req, res) => {
     try {
       res.render("dashboard");
@@ -9,13 +18,76 @@ module.exports = {
       throw error;
     }
   },
+
   user: async (req, res) => {
     try {
-      res.render("users/userList");
+     let user = await Models.userModel.findAll();
+
+      res.render("users/userList", { user});
+    } catch (error) {
+      throw error;
+      res.render("users/userList", { user: []});
+
+    }
+  },
+
+  
+
+  addUsers: async (req, res) => {
+    try {
+      res.render("users/addUserList");
     } catch (error) {
       throw error;
     }
   },
+
+  
+  
+  createUsers: async (req, res) => {
+    try {
+        const { name,  email } = req.body;
+        const userFile = req.files?.Image;
+        var userFilePath
+        if (req.files && req.files.Image) {
+            userFilePath = await helper.imageUpload(userFile, "Users");
+        }
+
+        const objToSave = {
+            name,
+            email,
+            
+            image: userFilePath,
+        };
+
+        await Models.userModel.create(objToSave);
+
+        res.redirect("/users");
+    } catch (error) {
+        console.error("Error adding music:", error);
+        res.redirect("/users");
+    }
+},
+
+  
+  deleteUsers: async (req, res) => {
+    try {
+      const { id } = req.params;
+      if (!id) {
+        return res.status(403).json({ message: "id is required" });
+      }
+      await Models.userModel.destroy({
+        where: {
+          id: id,
+        },
+      });
+      return res
+        .status(200)
+        .json({ status: 200, message: "user deleted succesfully" });
+    } catch (error) {
+      throw error;
+    }
+  },
+  
   Music: async (req, res) => {
     try {
       const musicData = await Models.musicModel.findAll();
@@ -86,6 +158,7 @@ module.exports = {
       res.redirect("/music");
     }
   },
+
   deleteMusic: async (req, res) => {
     try {
       const { id } = req.params;
@@ -107,8 +180,8 @@ module.exports = {
 
   Challenges: async (req, res) => {
     try {
-      let challenges = await Models.challengeModel.findAll()
-      res.render("challenges/challengesList",{challenges});
+      let challenges = await Models.challengeModel.findAll();
+      res.render("challenges/challengesList", { challenges });
     } catch (error) {
       // throw error;
       res.render("challenges/challengesList", { challenges: [] });
@@ -144,7 +217,6 @@ module.exports = {
 
       // Respond with success
       res.redirect("/Challenges");
-     
     } catch (error) {
       console.error("Error adding challenge:", error);
 
@@ -156,6 +228,9 @@ module.exports = {
       });
     }
   },
+
+
+
   deleteChallenges: async (req, res) => {
     try {
       const { id } = req.params;
@@ -182,6 +257,7 @@ module.exports = {
       throw error;
     }
   },
+
   contactUs: async (req, res) => {
     try {
       res.render("Contact_Us/contactUsList");
@@ -189,13 +265,64 @@ module.exports = {
       throw error;
     }
   },
+
   Banner: async (req, res) => {
     try {
-      res.render("Banners/bannerList");
+      let Banner = await Models.bannerModel.findAll();
+
+      res.render("Banners/bannerList", { Banner });
+    } catch (error) {
+      throw error;
+      res.render("Banners/bannerList", { Banner: [] });
+    }
+  },
+
+  addBanner: async (req, res) => {
+    try {
+      res.render("Banners/addBannerList");
     } catch (error) {
       throw error;
     }
   },
+
+  createBanners: async (req, res) => {
+    try {
+      const userFile = req.files?.Image;
+      var userFilePath;
+      if (req.files && req.files.Image) {
+        userFilePath = await helper.imageUpload(userFile, "Users");
+      }
+
+      const objToSave = { Image: userFilePath };
+
+      await Models.bannerModel.create(objToSave);
+
+      res.redirect("/Banner");
+    } catch (error) {
+      console.error("Error adding Banner:", error);
+      res.redirect("/Banner");
+    }
+  },
+
+  deleteBanners: async (req, res) => {
+    try {
+      const { id } = req.params;
+      if (!id) {
+        return res.status(403).json({ message: "id is required" });
+      }
+      await Models.bannerModel.destroy({
+        where: {
+          id: id,
+        },
+      });
+      return res
+        .status(200)
+        .json({ status: 200, message: "banner deleted succesfully" });
+    } catch (error) {
+      throw error;
+    }
+  },
+
   TermConditions: async (req, res) => {
     try {
       res.render("Terms&Conditions/termConditionsList");
@@ -203,6 +330,7 @@ module.exports = {
       throw error;
     }
   },
+
   PrivacyPolicy: async (req, res) => {
     try {
       res.render("PrivacyPolicy/privacyPolicy");
