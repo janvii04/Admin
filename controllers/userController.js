@@ -30,9 +30,7 @@ logIn: async (req,res)=>{
 
     }
   },
-
   
-
   addUsers: async (req, res) => {
     try {
       res.render("users/addUserList");
@@ -40,35 +38,86 @@ logIn: async (req,res)=>{
       throw error;
     }
   },
-
-  
   
   createUsers: async (req, res) => {
     try {
+      console.log(req.body,"fghjk")
         const { name,  email } = req.body;
-        const userFile = req.files?.Image;
+        const userFile = req.files?.image;
         var userFilePath
-        if (req.files && req.files.Image) {
-            userFilePath = await helper.imageUpload(userFile, "Users");
+        if (req.files && req.files.image) {
+            userFilePath = await helper.userImageUpload(userFile, "Users");
         }
 
         const objToSave = {
             name,
             email,
-            
             image: userFilePath,
         };
 
         await Models.userModel.create(objToSave);
 
-        res.redirect("/users");
+        res.redirect("/user");
     } catch (error) {
-        console.error("Error adding music:", error);
-        res.redirect("/users");
+        console.error("Error adding user:", error);
+        res.redirect("/user");
     }
 },
 
-  
+editUser: async (req, res) => {
+  try {
+      const { id } = req.params;
+      const user = await Models.userModel.findOne({
+          where: {
+              id: id
+          }
+      })
+
+      console.log(user, "useruser")
+
+      res.render("users/editUserList", { user: user });
+  } catch (error) {
+      console.error(error);
+      res.status(500).send("Internal Server Error");
+  }
+},
+
+updateUser: async (req, res) => {
+  try {
+      const userId = req.params.id;
+      if (!userId) {
+          return res.status(400).send("User ID is required");
+      }
+
+      const user = await Models.userModel.findOne({ where: { id: userId } });
+      if (!user) {
+          return res.status(404).send("User not found");
+      }
+
+      let userFilePath = user.image;
+      if (req.files && req.files.image) {
+          const userFile = req.files.image;
+          userFilePath = await helper.userImageUpload(userFile, "Users"); // Upload new image
+      }
+
+      const updatedUser = await Models.userModel.update(
+          {
+              image: userFilePath,
+              name: req.body.name,
+              email: req.body.email,
+          },
+          { where: { id: userId } }
+      );
+
+      console.log(updatedUser, "updatedUserupdatedUser");
+
+      res.redirect("/user");
+  } catch (error) {
+      console.error(error);
+      res.status(500).send("Error updating user");
+  }
+},
+
   deleteUsers: async (req, res) => {
     try {
       const { id } = req.params;
@@ -229,9 +278,7 @@ logIn: async (req,res)=>{
     }
   },
 
-
-
-  deleteChallenges: async (req, res) => {
+ deleteChallenges: async (req, res) => {
     try {
       const { id } = req.params;
       if (!id) {
@@ -287,13 +334,13 @@ logIn: async (req,res)=>{
 
   createBanners: async (req, res) => {
     try {
-      const userFile = req.files?.Image;
-      var userFilePath;
+      const bannerFile = req.files?.Image;
+      var bannerFilePath;
       if (req.files && req.files.Image) {
-        userFilePath = await helper.imageUpload(userFile, "Users");
+        bannerFilePath = await helper.bannerImageUpload(bannerFile, "Banners");
       }
 
-      const objToSave = { Image: userFilePath };
+      const objToSave = { Image: bannerFilePath };
 
       await Models.bannerModel.create(objToSave);
 
@@ -346,4 +393,5 @@ logIn: async (req,res)=>{
       throw error;
     }
   },
+
 };

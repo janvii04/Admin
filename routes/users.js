@@ -5,6 +5,9 @@ router.get("/", controller.logIn);
 router.get("/dashboard", controller.signUp);
 router.get("/user", controller.user);
 router.get("/addUsers",controller.addUsers);
+router.post("/updateUser/:id",controller.updateUser);
+router.get("/editUser/:id",controller.editUser);
+
 router.post("/createUsers",controller.createUsers);
 router.delete("/deleteUsers/:id",controller.deleteUsers);
 

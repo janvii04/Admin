@@ -1,60 +1,73 @@
-
 <%- include("../partials/header.ejs");%>
 
 <div class="addUser-container">
   <h2>Add User</h2>
   <div class="rightContainer">
-    <a href="#" onclick="window.location.href=document.referrer;" class="rightbutton">Back</a>
+    <a
+      href="#"
+      onclick="window.location.href=document.referrer;"
+      class="rightbutton"
+      >Back</a>
   </div>
 
   <form action="/createUsers" method="POST" enctype="multipart/form-data">
-    <h4>ID:</h4>
-    <input type="text" name="UserId" required />
-    <h4>Images:</h4>
-    <input type="file" name="UserImage" required />
-    <h4>Name:</h4>
-    <input type="text" name="UserName" required />
 
-    <h4>email:</h4>
-    <input type="text" name="UserEmail" required />
-    
+    <h4>Images:</h4>
+    <input type="file" name="image" required />
+    <h4>Name:</h4>
+    <input type="text" name="name" required />
+    <h4>Email:</h4>
+    <input type="text" name="email" required />
+<br><br>
     <button type="submit">Submit</button>
   </form>
 </div>
 
 <style>
-  h1 {
-    text-align: left;
-  }
+  
   .rightContainer {
-    margin-left: 50%;
-    background-color: grey;
-    color: black;
-    padding: 0.5rem 1.5rem;
-    text-decoration: none;
-    border-radius: 5px;
-    display: inline-block;
-    font-size: 1rem;
-    margin-bottom: 1rem;
+    /* display: inline-block; */
+
+  text-decoration: none;
+  color: #007BFF;
+  font-size: 16px;
+  padding: 5px 10px;
+  border: 1px solid #007BFF;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  float: right;
   }
+
+  .rightbutton.rightbutton:hover {
+  background-color: #007BFF;
+  color: #fff;
+}
+
   .rightbutton {
-    color: white;
+    color: #007BFF;
     text-decoration: none;
-    width: 60px;
+    width: 40px;
     font-size: 1.4rem;
-  }
-  .addUser-container {
-    margin-top: 20px;
-    margin-left: 100px;
-    background: #fff;
-    padding: 2rem;
-    border-radius: 40px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 70%;
-    height: 70%;
-    text-align: center;
+    margin-bottom: 20px;
+  text-align: right;
     
   }
+  .addUser-container {
+ 
+ max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  text-align: center;  
+  height: 70%;
+
+  
+}
+  
 
   .addUser-container h1 {
     margin-bottom: 1.5rem;
@@ -63,34 +76,32 @@
   }
 
   .addUser-container input {
-    width: 80%;
-    padding: 0.75rem;
-    margin: 0.5rem 0;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    font-size: 1rem;
+    width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
   }
 
   .addUser-container input:focus {
     outline: none;
-    border-color:green;
+    border-color: green;
   }
 
   .addUser-container button {
-    margin-left: auto;
-    background: green;
-    color: #fff;
-    border: none;
-    padding: 0.75rem 4.5rem;
-    border-radius: 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background 0.3s;
+    padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #28a745;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
   }
 
   .addUser-container button:hover {
     background: #2575fc;
-    
   }
 
   @media (max-width: 600px) {
@@ -99,7 +110,7 @@
     }
 
     .addUser-container h1 {
-      font-size: 1.5rem;
+      font-size: 0.5rem;
     }
 
     .addUser-container input {
