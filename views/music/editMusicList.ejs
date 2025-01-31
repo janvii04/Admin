@@ -1,0 +1,144 @@
+<%- include("../partials/header.ejs");%>
+
+<div class="editMusic-container">
+  <h1><center>Edit Music</center></h1>
+  <div class="backContainer">
+    <a
+      href="#"
+      onclick="window.location.href=document.referrer;"
+      class="backbutton"
+      >Back</a
+    >
+  </div>
+
+
+  <form
+    action="/updateMusic/<%= music.id %>"
+    method="post"
+    enctype="multipart/form-data"
+  >
+    <input type="hidden" name="id" value="<%= music.id %>" />
+
+    <td>
+        <audio controls>
+          <source src="<%= music.music %>" type="audio/mp3">
+          Your browser does not support the audio element.
+        </audio>
+
+    <input
+      type="file"
+      name="music"
+      id="musicUpload"
+      accept="music/*"
+      style="display: none"
+    />
+
+    <h3>Title:</h3>
+    <input type="text" name="title" value="<%= music.title %>" />
+
+    <h3>Description:</h3>
+    <input type="text" name="Description" value="<%= music.Description %>" />
+
+    
+
+    <button type="submit">Update</button>
+  </form>
+
+  <style>
+    h1 {
+      text-align: left;
+    }
+ 
+    .editMusic-container {
+      margin-top: 20px;
+      margin-left: 200px;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 40px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 60%;
+      text-align: center;
+    }
+
+    .editMusic-container h1 {
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+      color: #333;
+    }
+
+    .editMusic-container input {
+      width: 100%;
+      padding: 0.75rem;
+      margin: 0.5rem 0;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      font-size: 1rem;
+    }
+
+    .editMusic-container input:focus {
+      outline: none;
+      border-color: #2575fc;
+    }
+
+    .editMusic-container button {
+      margin-left: auto;
+      background: #2575fc;
+      color: #fff;
+      border: none;
+      padding: 0.75rem 4.5rem;
+      border-radius: 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .editMusic-container button:hover {
+      background: lightseagreen;
+    }
+
+    @media (max-width: 600px) {
+      .editMusic-container {
+        padding: 1.5rem;
+      }
+
+      .editMusic-container h1 {
+        font-size: 1.5rem;
+      }
+
+      .editMusic-container input {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+      }
+
+      .editMusic-container button {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    h3 {
+      text-align: left;
+    }
+  </style>
+
+  <script>
+    document.getElementById("music").addEventListener("click", function () {
+      document.getElementById("musicUpload").click();
+    });
+
+    document
+      .getElementById("musicUpload")
+      .addEventListener("change", function (event) {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            document.getElementById("music").src = e.target.result;
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+  </script>
+
+  <%- include("../partials/footer.ejs");%>
+</div>

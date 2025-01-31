@@ -1,16 +1,16 @@
 <%- include("../partials/header.ejs");%>
 
 <div class="addMusic-container">
-  <h2>Add Challenges</h2>
+  <h2>Add FAQ's</h2>
   <div class="backContainer">
     <a href="#" onclick="window.location.href=document.referrer;" class="backbutton">Back</a>
   </div>
 
-  <form action="/createChallenges" method="POST" enctype="multipart/form-data">
-    <h3>Title:</h3>
-    <input type="text" name="title" required />
-    <h3>Description:</h3>
-    <input type="text" name="description" required />
+  <form action="/createFaq" method="POST" enctype="multipart/form-data">
+    <h3>Question:</h3>
+    <input type="text" name="Question" required />
+    <h3>Answer:</h3>
+    <input type="text" name="Answer" required />
     
     <button type="submit">Submit</button>
   </form>

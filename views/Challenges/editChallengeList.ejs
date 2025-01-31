@@ -1,0 +1,53 @@
+<%- include("../partials/header.ejs");%>
+
+<div class="editUser-container">
+  <h1><center>Edit Challenge</center></h1>
+  <div class="backContainer">
+    <a
+      href="#"
+      onclick="window.location.href=document.referrer;"
+      class="backbutton"
+      >Back</a
+    >
+  </div>
+
+  <form
+    action="/updateChallange/<%= Challenges.id %>"
+    method="post"
+    enctype="multipart/form-data"
+  >
+    <input type="hidden" name="id" value="<%= Challenges.id %>" />
+
+   
+    <h3>Title:</h3>
+    <input type="text" name="title" value="<%= Challenges.title %>" />
+
+    <h3>Description:</h3>
+    <input type="text" name="description" value="<%= Challenges.description %>" />
+
+    <button type="submit">Update</button>
+  </form>
+
+
+
+  <script>
+    document.getElementById("Challenges").addEventListener("click", function () {
+      document.getElementById("challangeUpload").click();
+    });
+
+    document
+      .getElementById("challangeUpload")
+      .addEventListener("change", function (event) {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            document.getElementById("Challenges").src = e.target.result;
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+  </script>
+
+  <%- include("../partials/footer.ejs");%>
+</div>

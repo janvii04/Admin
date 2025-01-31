@@ -1,12 +1,12 @@
 <%- include("../partials/header.ejs");%>
 
-<div class="addUser-container">
+<div class="addMusic-container">
   <h2>Add User</h2>
-  <div class="rightContainer">
+  <div class="backContainer">
     <a
       href="#"
       onclick="window.location.href=document.referrer;"
-      class="rightbutton"
+      class="backbutton"
       >Back</a>
   </div>
 
@@ -18,115 +18,10 @@
     <input type="text" name="name" required />
     <h4>Email:</h4>
     <input type="text" name="email" required />
-<br><br>
     <button type="submit">Submit</button>
   </form>
 </div>
 
-<style>
-  
-  .rightContainer {
-    /* display: inline-block; */
 
-  text-decoration: none;
-  color: #007BFF;
-  font-size: 16px;
-  padding: 5px 10px;
-  border: 1px solid #007BFF;
-  border-radius: 5px;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  float: right;
-  }
-
-  .rightbutton.rightbutton:hover {
-  background-color: #007BFF;
-  color: #fff;
-}
-
-  .rightbutton {
-    color: #007BFF;
-    text-decoration: none;
-    width: 40px;
-    font-size: 1.4rem;
-    margin-bottom: 20px;
-  text-align: right;
-    
-  }
-  .addUser-container {
- 
- max-width: 500px;
-  margin: 40px auto;
-  padding: 20px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  font-family: Arial, sans-serif;
-  text-align: center;  
-  height: 70%;
-
-  
-}
-  
-
-  .addUser-container h1 {
-    margin-bottom: 1.5rem;
-    font-size: 2rem;
-    color: #333;
-  }
-
-  .addUser-container input {
-    width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  box-sizing: border-box;
-  }
-
-  .addUser-container input:focus {
-    outline: none;
-    border-color: green;
-  }
-
-  .addUser-container button {
-    padding: 10px 20px;
-  font-size: 16px;
-  color: #fff;
-  background-color: #28a745;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  }
-
-  .addUser-container button:hover {
-    background: #2575fc;
-  }
-
-  @media (max-width: 600px) {
-    .addUser-container {
-      padding: 1.5rem;
-    }
-
-    .addUser-container h1 {
-      font-size: 0.5rem;
-    }
-
-    .addUser-container input {
-      padding: 0.5rem;
-      font-size: 0.9rem;
-    }
-
-    .addUser-container button {
-      padding: 0.5rem 1rem;
-      font-size: 0.9rem;
-    }
-  }
-
-  h4 {
-    text-align: left;
-  }
-</style>
 
 <%- include("../partials/footer.ejs");%>

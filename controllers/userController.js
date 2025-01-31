@@ -227,6 +227,61 @@ updateUser: async (req, res) => {
     }
   },
 
+  editMusic: async (req, res) => {
+    try {
+        const { id } = req.params;
+        const music = await Models.musicModel.findOne({
+            where: {
+                id: id
+            }
+        })
+  
+        console.log(music, "musicmusic")
+  
+        res.render("music/editmusicList", { music: music });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+    }
+  },
+
+  updateMusic: async (req, res) => {
+    try {
+        const musicId = req.params.id;
+        if (!musicId) {
+            return res.status(400).send("music ID is required");
+        }
+  
+        const music = await Models.musicModel.findOne({ where: { id: musicId } });
+        if (!music) {
+            return res.status(404).send("music not found");
+        }
+  
+        let musicFilePath = music.music;
+        if (req.files && req.files.music) {
+            const musicFile = req.files.music;
+            musicFilePath = await helper.fileUpload(musicFile, "music"); // Upload new music
+        }
+  
+        const updatedMusic = await Models.musicModel.update(
+            {
+                music: musicFilePath,
+                title: req.body.title,
+                description: req.body.description,
+            },
+            { where: { id: musicId } }
+        );
+  
+        console.log(updatedMusic, "updatedMusicupdatedMusic");
+  
+        res.redirect("/music");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error updating music");
+    }
+  },
+  
+  
   Challenges: async (req, res) => {
     try {
       let challenges = await Models.challengeModel.findAll();
@@ -248,17 +303,17 @@ updateUser: async (req, res) => {
   createChallenges: async (req, res) => {
     try {
       // Destructure and validate request body
-      const { title, description, action } = req.body;
+      const { title, description} = req.body;
 
-      if (!title || !description || !action) {
+      if (!title || !description ) {
         return res.status(400).json({
           success: false,
-          message: "All fields (title, description, action) are required.",
+          message: "All fields (title, description) are required.",
         });
       }
 
       // Create object to save
-      const objToSave = { title, description, action };
+      const objToSave = { title, description };
       console.log("Saving challenge:", objToSave);
 
       // Save to database
@@ -297,13 +352,176 @@ updateUser: async (req, res) => {
     }
   },
 
+  editChallenge: async (req, res) => {
+    try {
+        const { id } = req.params;
+        const Challenges = await Models.challengeModel.findOne({
+            where: {
+                id: id
+            }
+        })
+  
+        console.log(Challenges, "Challenges")
+  
+        res.render("Challenges/editChallengeList", { Challenges: Challenges });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+    }
+  },
+  
+  updateChallange: async (req, res) => {
+    try {
+        const challengeId = req.params.id;
+        if (!challengeId) {
+            return res.status(400).send("Challenges ID is required");
+        }
+  
+        const Challenges = await Models.challengeModel.findOne({ where: { id: challengeId } });
+        if (!Challenges) {
+            return res.status(404).send("challenge not found");
+        }
+  
+        // // let challengeFilePath = user.image;
+        // if (req.files && req.files.image) {
+        //     const userFile = req.files.image;
+        //     userFilePath = await helper.userImageUpload(userFile, "Users"); // Upload new image
+        // }
+  
+        const updatedChallenge= await Models.challengeModel.update(
+            {
+                title: req.body.title,
+                description: req.body.description,
+            },
+            { where: { id: challengeId } }
+        );
+  
+        console.log(updatedChallenge, "updatedChallengeupdatedChallenge");
+  
+        res.redirect("/Challenges");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error updating Challenges");
+    }
+  },
+
   FAQ: async (req, res) => {
     try {
-      res.render("FAQ/faqList");
+      let FAQ = await Models.faqModel.findAll();
+      res.render("FAQ/faqList",{FAQ});
     } catch (error) {
       throw error;
     }
   },
+  addFaq: async (req, res) => {
+    try {
+      res.render("FAQ/addFaqList");
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  createFaq: async (req, res) => {
+    try {
+      // Destructure and validate request body
+      const { Question, Answer} = req.body;
+
+      if (!Question || !Answer ) {
+        return res.status(400).json({
+          success: false,
+          message: "All fields (title, description) are required.",
+        });
+      }
+
+      // Create object to save
+      const objToSave = { Question, Answer };
+      console.log("Saving FAq:", objToSave);
+
+      // Save to database
+      await Models.faqModel.create(objToSave);
+
+      // Respond with success
+      res.redirect("/FAQ");
+    } catch (error) {
+      console.error("Error adding FAQ:", error);
+
+      // Respond with error
+      return res.status(500).json({
+        success: false,
+        message: "An error occurred while creating the FAQ.",
+        error: error.message,
+      });
+    }
+  },
+
+  deleteFaq: async (req, res) => {
+    try {
+      const { id } = req.params;
+      if (!id) {
+        return res.status(403).json({ message: "id is required" });
+      }
+      await Models.faqModel.destroy({
+        where: {
+          id: id,
+        },
+      });
+      return res
+        .status(200)
+        .json({ status: 200, message: "faq deleted succesfully" });
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  editFaq: async (req, res) => {
+    try {
+
+        const { id } = req.params;
+        const FAQ = await Models.faqModel.findOne({
+            where: {
+                id: id
+            }
+        })
+  
+        console.log(FAQ, "FAQ")
+  
+        res.render("FAQ/ediTFaqList", { FAQ: FAQ });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+    }
+  },
+
+  updateFaq: async (req, res) => {
+    try {
+        const faqId = req.params.id;
+        if (!faqId) {
+            return res.status(400).send("faq ID is required");
+        }
+  
+        const FAQ = await Models.faqModel.findOne({ where: { id: faqId } });
+        if (!FAQ) {
+            return res.status(404).send("faq not found");
+        }
+  
+  
+        const updatedFaq= await Models.faqModel.update(
+            {
+                Question: req.body.Question,
+                Answer: req.body.Answer,
+            },
+            { where: { id: faqId } } 
+        );
+  
+        console.log(updatedFaq, "updatedFaqupdatedFaq");
+  
+        res.redirect("/FAQ");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error updating faq");
+    }
+  },
+
 
   contactUs: async (req, res) => {
     try {
@@ -369,6 +587,60 @@ updateUser: async (req, res) => {
       throw error;
     }
   },
+
+  editBanner: async (req, res) => {
+    try {
+        const { id } = req.params;
+        const Banner = await Models.bannerModel.findOne({
+            where: {
+                id: id
+            }
+        })
+  
+        console.log(Banner, "Banner")
+  
+        res.render("Banners/editBannerList", { Banner: Banner });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+    }
+  },
+  
+  updateBanner: async (req, res) => {
+    try {
+        const bannerId = req.params.id;
+        if (!bannerId) {
+            return res.status(400).send("Banner ID is required");
+        }
+  
+        const Banner = await Models.bannerModel.findOne({ where: { id: bannerId } });
+        if (!Banner) {
+            return res.status(404).send("Banner not found");
+        }
+  
+        let bannerFilePath = Banner.image;
+        if (req.files && req.files.image) {
+            const bannerFile = req.files.image;
+            bannerFilePath = await helper.bannerImageUpload(bannerFile, "banner"); // Upload new image
+        }
+  
+        const updatedBanner= await Models.bannerModel.update(
+            {
+              image: bannerFilePath,
+
+            },
+            { where: { id: bannerId } }
+        );
+  
+        console.log(updatedBanner, "updatedBannerpdatedBanner");
+  
+        res.redirect("/Banners");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error updating Banner");
+    }
+  },
+
 
   TermConditions: async (req, res) => {
     try {

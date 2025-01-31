@@ -1,7 +1,7 @@
 <%- include("../partials/header.ejs");%>
 
 <div class="site">
-  <a href="/dashboard"> DashBoard</a> 
+  <a href="/dashboard" style="text-decoration: none;"> DashBoard</a> 
 
  </div>
   
@@ -14,6 +14,15 @@
    
     <div class="add-button">
       <button><a href="/addBanner" class="add-button" style="text-decoration: none;">+ Add Banner</a></button>
+    </div>
+    <div class="search-container">
+      <h2><label for="search">Search:</label></h2>
+      <input
+        id="search"
+        type="search"
+        placeholder="Type to search..."
+        aria-controls="userTable"
+      />
     </div>
     <div class="table-container">
       <table>
@@ -31,9 +40,14 @@
           <td><%= index + 1 %></td>
           <td><img src="<%=Banner.Image%>" alt="User Image" style="width:50px;height: 50px;"/></td>
           <td>
-            <button class="delete-btn" id="<%= Banner.id %>">
-              <i class="fas fa-trash"></i> 
-            </button>
+            <div class="action-buttons">
+              <a href="/editBanner/<%= Banner.id %>">
+                  <i class="fas fa-edit"></i>
+                </a>
+              <button class="delete-btn" id="<%= Banner.id %>">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
           </td>
         </tr>
       <% }); %>
@@ -46,7 +60,7 @@
 
 
 .table-container {
-  padding: 20px;
+  padding: 5px;
 }
 
 table {
@@ -71,7 +85,7 @@ th {
 }
 
 .delete-btn {
-  background-color: gray;
+  background-color:#ddd;
   border: none;
   color: black;
   padding: 8px 12px;
@@ -101,6 +115,7 @@ th {
 .add-button button:hover {
   text-decoration: none;
   background-color: gray;
+  color: gray;
 }
 
 </style>

@@ -20,7 +20,7 @@
   }
 </style>
 <div class="site">
-  <a href="/dashboard"> DashBoard</a> 
+  <a href="/dashboard" style="text-decoration: none;"> DashBoard</a> 
 
  </div>
  <center><h1>Music</h1></center>
@@ -28,6 +28,15 @@
 <table>
   <div class="musicContainer">
     <a href="/addMusic" class="add-music">+ Add Music</a>
+  </div>
+  <div class="search-container">
+    <h2><label for="search">Search:</label></h2>
+    <input
+      id="search"
+      type="search"
+      placeholder="Type to search..."
+      aria-controls="userTable"
+    />
   </div>
   <tr>
     <th>S.No.</th>
@@ -48,9 +57,20 @@
           Your browser does not support the audio element.
         </audio>
       </td>
-      <td>
+      <!-- <td>
         <button class="delete-btn" id="<%= music.id %>"><i class="fas fa-trash"></i> </button>
+      </td> -->
+      <td>
+        <div class="action-buttons">
+          <a href="/editMusic/<%= music.id %>">
+              <i class="fas fa-edit"></i>
+            </a>
+          <button class="delete-btn" id="<%= music.id %>">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
       </td>
+
     </tr>
   <% }); %>
 </table>

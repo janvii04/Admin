@@ -1,7 +1,7 @@
     
     <%- include("../partials/header.ejs"); %>
 
-<div class="addBanner-container">
+<div class="addMusic-container">
   <h2>Add Banner</h2>
   <div class="backContainer">
     <a href="#" onclick="window.history.back();" class="backbutton">Back</a>
@@ -11,99 +11,11 @@
     <h3>Image:</h3>
     <input type="file" name="Image"  required />
 
-    <!-- <h3>Action:</h3>
-    <input type="text" name="action" required /> -->
-
+    
     <button type="submit">Submit</button>
   </form>
 </div>
 
-<style>
-/* General container styling */
-.addBanner-container {
-  max-width: 600px;
-  margin: 50px auto;
-  padding: 20px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  font-family: Arial, sans-serif;
-}
 
-/* Header styling */
-.addBanner-container h2 {
-  text-align: center;
-  color: #333;
-  margin-bottom: 20px;
-}
-
-/* Back button container */
-.backContainer {
-  text-align: right;
-  margin-bottom: 20px;
-}
-
-.backContainer .backbutton {
-  text-decoration: none;
-  color: #fff;
-  background-color: #007bff;
-  padding: 10px 15px;
-  border-radius: 5px;
-  font-size: 14px;
-  transition: background-color 0.3s ease;
-}
-
-.backContainer .backbutton:hover {
-  background-color: #0056b3;
-}
-
-/* Form styling */
-form {
-  display: flex;
-  flex-direction: column;
-}
-
-form h3 {
-  margin-bottom: 5px;
-  color: #333;
-}
-
-form input[type="text"], 
-form input[type="file"] {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 14px;
-}
-
-form button {
-  padding: 10px 15px;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-form button:hover {
-  background-color: #218838;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .addBanner-container {
-    padding: 15px;
-  }
-
-  form button {
-    font-size: 14px;
-  }
-}
-</style>
 
 <%- include("../partials/footer.ejs"); %>

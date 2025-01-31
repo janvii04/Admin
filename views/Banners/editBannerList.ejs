@@ -1,7 +1,7 @@
 <%- include("../partials/header.ejs");%>
 
 <div class="editUser-container">
-  <h1><center>Edit User</center></h1>
+  <h1><center>Edit Challenge</center></h1>
   <div class="backContainer">
     <a
       href="#"
@@ -12,15 +12,14 @@
   </div>
 
   <form
-    action="/updateUser/<%= user.id %>"
+    action="/updateBanner/<%= Banner.id %>"
     method="post"
     enctype="multipart/form-data"
   >
-    <input type="hidden" name="id" value="<%= user.id %>" />
-
+    <input type="hidden" name="id" value="<%= Banner.id %>" />
     <img
       id="image"
-      src="<%= user.image %>"
+      src="<%=Banner.image %>"
       width="100"
       style="cursor: pointer; border-radius: 10px"
     />
@@ -32,30 +31,26 @@
       accept="image/*"
       style="display: none"
     />
-
-    <h3>Name:</h3>
-    <input type="text" name="name" value="<%= user.name %>" />
-
-    <h3>Email:</h3>
-    <input type="email" name="email" value="<%= user.email %>" />
+   
 
     <button type="submit">Update</button>
   </form>
 
 
+
   <script>
-    document.getElementById("image").addEventListener("click", function () {
-      document.getElementById("imageUpload").click();
+    document.getElementById("Banner").addEventListener("click", function () {
+      document.getElementById("BannerUpload").click();
     });
 
     document
-      .getElementById("imageUpload")
+      .getElementById("BannerUpload")
       .addEventListener("change", function (event) {
         const file = event.target.files[0];
         if (file) {
           const reader = new FileReader();
           reader.onload = function (e) {
-            document.getElementById("image").src = e.target.result;
+            document.getElementById("Banner").src = e.target.result;
           };
           reader.readAsDataURL(file);
         }

@@ -1,0 +1,53 @@
+<%- include("../partials/header.ejs");%>
+
+<div class="editUser-container">
+  <h1><center>Edit FAQ's</center></h1>
+  <div class="backContainer">
+    <a
+      href="#"
+      onclick="window.location.href=document.referrer;"
+      class="backbutton"
+      >Back</a
+    >
+  </div>
+
+  <form
+    action="/updateFaq/<%= FAQ.id %>"
+    method="post"
+    enctype="multipart/form-data"
+  >
+    <input type="hidden" name="id" value="<%= FAQ.id %>" />
+
+   
+    <h3>Question:</h3>
+    <input type="text" name="title" value="<%= FAQ.Question %>" />
+
+    <h3>Answer:</h3>
+    <input type="text" name="description" value="<%= FAQ.Answer %>" />
+
+    <button type="submit">Update</button>
+  </form>
+
+
+
+  <script>
+    document.getElementById("FAQ").addEventListener("click", function () {
+      document.getElementById("faqUpload").click();
+    });
+
+    document
+      .getElementById("faqUpload")
+      .addEventListener("change", function (event) {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            document.getElementById("faq").src = e.target.result;
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+  </script>
+
+  <%- include("../partials/footer.ejs");%>
+</div>
