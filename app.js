@@ -6,22 +6,32 @@ var fileUpload = require('express-fileupload');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var session = require('express-session')
 
 // var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
+ 
 var app = express();
 require("./dbConnection").connectionDB()
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(logger('dev'));
+app.use(logger('dev')); 
 app.use(fileUpload());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+	secret: 'keyboard cat',
+	resave: false,
+	saveUninitialized: true,
+	cookie: {
+		maxAge: 24 * 60 * 60 * 365 * 1000,
+	},
+}));
+
 
 // app.use('/', indexRouter);
 app.use('/', usersRouter);

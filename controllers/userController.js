@@ -1,5 +1,6 @@
 const Models = require("../models/index");
 const helper = require("../helpers/fileUpload");
+const bcrypt = require("bcrypt");
 
 module.exports = {
   logIn: async (req, res) => {
@@ -7,6 +8,63 @@ module.exports = {
       res.render("loginPage");
     } catch (error) {
       throw error;
+    }
+  },
+  // logInDone: async (req, res) => {
+  //   try {
+  //     console.log("req.body", req.body);
+
+  //     let user = await Models.userModel.findOne({
+  //       where: {
+  //         email: req.body.email,
+  //         password: req.body.password,
+  //         role: 0,
+  //       },
+  //       raw: true,
+  //     });
+  //     console.log("user======", user);
+  //     const hashedPassword = await bcrypt.compare();
+  //     if (!user) {
+  //       return res.send("User not found");
+  //     } else {
+  //       req.session.user = user;
+  //       res.redirect("/dashboard");
+  //     }
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // },
+
+  logInDone: async (req, res) => {
+    try {
+      console.log("req.body:", req.body);
+
+      const { email, password } = req.body;
+
+      let user = await Models.userModel.findOne({
+        where: { email, role: 0 },
+        raw: true
+      });
+
+      console.log("user:", user);
+
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      const isMatch = await bcrypt.compare(password, user.password);
+
+      if (!isMatch) {
+        return res.status(401).json({ message: "Invalid credentials" });
+      }
+
+      req.session.user = user;
+
+      res.redirect("/dashboard");
+
+    } catch (error) {
+      console.error("Login error:", error);
+      res.status(500).json({ message: "Internal Server Error" });
     }
   },
 
@@ -55,7 +113,7 @@ module.exports = {
   createUsers: async (req, res) => {
     try {
       console.log(req.body, "fghjk");
-      const { name, email } = req.body;
+      const { name, email, role, password } = req.body;
       const userFile = req.files?.image;
       var userFilePath;
       if (req.files && req.files.image) {
@@ -65,6 +123,8 @@ module.exports = {
       const objToSave = {
         name,
         email,
+        role,
+        password,
         image: userFilePath,
       };
 
@@ -450,7 +510,7 @@ module.exports = {
       }
 
       // Create object to save
-      const objToSave = { name, email, message,date };
+      const objToSave = { name, email, message, date };
       console.log("Saving contact:", objToSave);
 
       // Save to database
@@ -561,8 +621,7 @@ module.exports = {
           name: req.body.name,
           email: req.body.email,
           message: req.body.message,
-          date : req.body.date,
-
+          date: req.body.date,
         },
         { where: { id: userId } }
       );
@@ -932,12 +991,11 @@ module.exports = {
   test: async (req, res) => {
     try {
       let objToSave = {
-        type: 3,
-        title: "About Us",
-        description: "hfds",
+        role: 0,
+        email: " jeevan@gmail.com",
+        password: hashedPassword,
       };
-      await Models.cmsModel.create(objToSave);
+      await Models.userModel.create(objToSave);
     } catch (error) {}
   },
-
 };
