@@ -1,7 +1,7 @@
 <%- include("../partials/header.ejs");%>
 
 <div class="editUser-container">
-  <h1><center>Edit Challenge</center></h1>
+  <h1><center>Edit Banner</center></h1>
   <div class="backContainer">
     <a
       href="#"
@@ -19,16 +19,16 @@
     <input type="hidden" name="id" value="<%= Banner.id %>" />
     <img
       id="image"
-      src="<%=Banner.image %>"
+      src="<%=Banner.Image %>"
       width="100"
       style="cursor: pointer; border-radius: 10px"
     />
 
     <input
       type="file"
-      name="image"
+      name="Image"
       id="imageUpload"
-      accept="image/*"
+      accept="Image/*"
       style="display: none"
     />
    

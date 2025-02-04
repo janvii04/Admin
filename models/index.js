@@ -1,6 +1,4 @@
 const Sequelize = require("sequelize")
-const challengeModel = require("./challengeModel")
-const bannerModel = require("./bannerModel")
 const sequelize = require("../dbConnection").sequelize
 
 module.exports = {
@@ -9,5 +7,7 @@ module.exports = {
     challengeModel: require("./challengeModel")(Sequelize, sequelize, Sequelize.DataTypes),
     bannerModel: require("./bannerModel")(Sequelize, sequelize, Sequelize.DataTypes),
     faqModel: require("./faqModel")(Sequelize, sequelize, Sequelize.DataTypes),
+    cmsModel: require("./cmsModel")(Sequelize, sequelize, Sequelize.DataTypes),
+    contactUsModel: require("./contactUsModel")(Sequelize, sequelize, Sequelize.DataTypes),
 
 }

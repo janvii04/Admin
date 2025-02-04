@@ -3,94 +3,61 @@
 <div class="site">
   <a href="/dashboard" style="text-decoration: none;"> DashBoard</a>
 </div>
+<center><h1>Terms & Conditions</h1></center>
 
-<div class="dashboard">
- 
+<script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
 
-  <h1>Terms & Conditions</h1>
-
-  <div class="form-group">
-    <label for="title">Title</label>
-    <input type="text" id="title" value="Terms & Conditions" />
-  </div>
-
-  <div class="form-group">
-    <label for="description">Description</label>
-    <div class="toolbar">
-      <button>B</button>
-      <button>I</button>
-      <button>U</button>
-      <button>Left</button>
-      <button>Center</button>
-      <button>Right</button>
+<div class="main-content">
+  <section class="section container-box">
+    <div class="section-header">
+      <div class="section-header-breadcrumb"></div>
     </div>
-    <textarea id="description">
-A Terms and Conditions agreement acts as a legal contract between you (the company) and the user. 
- It's where you maintain your rights to exclude users from your app in the event that they  abuse your website/app, 
-set out the rules for using your service and note other important details and disclaimers.
-Having a Terms and Conditions agreement is completely optional. 
-No laws require you to have one. 
-Not even the super-strict and wide-reaching General Data Protection Regulation (GDPR).
- Your Terms and Conditions agreement will be uniquely yours. 
- While some clauses are standard and commonly seen in pretty much every Terms and Conditions agreement, 
- it's up to you to set the rules and guidelines that the user must agree to.
-Terms and Conditions agreements are also known as Terms of Service or Terms of Use agreements. 
- these terms are interchangeable, practically speaking. More rarely, it may be called something like an End User Services Agreement (EUSA).
-            </textarea
-    >
-  </div>
+    <div class="section-body">
+      <div class="card">
+        <div class="card-body">
+          <form method="post" action="/updateTermConditions" >
+            <div class="form-group">
+              <label>Title</label>
+              <input
+                type="text"
+                name="title"
+                value="<%= termsData?.title %>"
+                class="form-control"
+                readonly
+              />
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <textarea
+                id="content"
+                name="description"
+                class="form-control"
+                required><%= termsData?.description %></textarea>
+              <input type="hidden" name="id" value="<%= termsData?.id %>" />
+              <input type="hidden" name="type" value="1" />
+
+            </div>
+            <div class="d-flex justify-content-end">
+              <button type="submit" class="btn btn-success">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
 
-<style>
-  
 
-  .form-group {
-    margin-bottom: 0px;
-  }
+<script>
+  ClassicEditor.create(document.querySelector("#content"))
+    .then(editor => {
+      document.querySelector("form").addEventListener("submit", () => {
+        document.querySelector("#content").value = editor.getData();
+      });
+    })
+    .catch(error => {
+      console.error(error);
+    });
+</script>
 
-  .form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #555;
-  }
-
-  .form-group input[type="text"],
-  .form-group textarea,
-  .form-group select {
-    width: 90%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-    color: #333;
-  }
-
-  .form-group textarea {
-    resize: vertical;
-    height: 150px;
-  }
-
-  .toolbar {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
-
-  .toolbar button {
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background: #f4f4f4;
-    cursor: pointer;
-    font-size: 0.9rem;
-    color: #333;
-  }
-
-  .toolbar button:hover {
-    background: #eaeaea;
-  }
-
-  
-</style>
 <%- include("../partials/footer");%>

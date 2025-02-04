@@ -1,0 +1,84 @@
+<%- include("../partials/header.ejs");%>
+
+<div class="addMusic-container">
+  <h2>Add contactUs</h2>
+  <div class="backContainer">
+    <a href="#" onclick="window.location.href=document.referrer;" class="backbutton">Back</a>
+  </div>
+
+  <form action="/createContact" method="POST" enctype="multipart/form-data">
+    <table>
+      <tr>
+        <td><label for="name">Name:</label></td>
+        <td><input type="text" id="name" name="name" required /></td>
+      </tr>
+      <tr>
+        <td><label for="email">Email:</label></td>
+        <td><input type="email" id="email" name="email" required /></td>
+      </tr>
+      <tr>
+        <td><label for="message">Message:</label></td>
+        <td><textarea id="message" name="message" required></textarea></td>
+      </tr>
+      <tr>
+        <td><label for="date">Date:</label></td>
+        <td><input type="date" id="date" name="date" required /></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <button type="submit">Submit</button>
+        </td>
+      </tr>
+    </table>
+  </form>
+  
+</div>
+
+<style>
+
+
+/* Form Container */
+.form-container {
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    text-align: center;
+    margin: 0%;
+}
+
+
+
+/* Table Styling */
+table {
+    width: 90%;
+}
+
+/* Table Labels */
+td label {
+    font-weight: bold;
+    color: #555;
+    text-align: left;
+    display: block;
+}
+
+/* Input Fields */
+input, textarea {
+    width: 90%;
+    padding: 4px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Textarea Resizing */
+textarea {
+    height: 50px;
+    resize: vertical;
+}
+
+
+</style>
+<%- include("../partials/footer.ejs");%>

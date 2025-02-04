@@ -2,35 +2,48 @@ const Models = require("../models/index");
 const helper = require("../helpers/fileUpload");
 
 module.exports = {
-
-logIn: async (req,res)=>{
-  try {
-    res.render("loginPage");
-  } catch (error) {
-    throw error;
-  }
-},
+  logIn: async (req, res) => {
+    try {
+      res.render("loginPage");
+    } catch (error) {
+      throw error;
+    }
+  },
 
   signUp: async (req, res) => {
     try {
-      res.render("dashboard");
+      const userCount = await Models.userModel.count();
+      const musicCount = await Models.musicModel.count();
+      const challengeCount = await Models.challengeModel.count();
+      const contactCount = await Models.contactUsModel.count();
+      const faqCount = await Models.faqModel.count();
+      const bannerCount = await Models.bannerModel.count(); // Add banner count if applicable
+
+      res.render("dashboard", {
+        userCount,
+        musicCount,
+        challengeCount,
+        contactCount,
+        faqCount,
+        bannerCount, // Ensure this is included
+      });
     } catch (error) {
-      throw error;
+      console.error("Error fetching dashboard data:", error);
+      res.status(500).send("Internal Server Error");
     }
   },
 
   user: async (req, res) => {
     try {
-     let user = await Models.userModel.findAll();
+      let user = await Models.userModel.findAll();
 
-      res.render("users/userList", { user});
+      res.render("users/userList", { user });
     } catch (error) {
       throw error;
-      res.render("users/userList", { user: []});
-
+      res.render("users/userList", { user: [] });
     }
   },
-  
+
   addUsers: async (req, res) => {
     try {
       res.render("users/addUserList");
@@ -38,85 +51,85 @@ logIn: async (req,res)=>{
       throw error;
     }
   },
-  
+
   createUsers: async (req, res) => {
     try {
-      console.log(req.body,"fghjk")
-        const { name,  email } = req.body;
-        const userFile = req.files?.image;
-        var userFilePath
-        if (req.files && req.files.image) {
-            userFilePath = await helper.userImageUpload(userFile, "Users");
-        }
+      console.log(req.body, "fghjk");
+      const { name, email } = req.body;
+      const userFile = req.files?.image;
+      var userFilePath;
+      if (req.files && req.files.image) {
+        userFilePath = await helper.userImageUpload(userFile, "Users");
+      }
 
-        const objToSave = {
-            name,
-            email,
-            image: userFilePath,
-        };
+      const objToSave = {
+        name,
+        email,
+        image: userFilePath,
+      };
 
-        await Models.userModel.create(objToSave);
+      await Models.userModel.create(objToSave);
 
-        res.redirect("/user");
+      res.redirect("/user");
     } catch (error) {
-        console.error("Error adding user:", error);
-        res.redirect("/user");
+      console.error("Error adding user:", error);
+      res.redirect("/user");
     }
-},
+  },
 
-editUser: async (req, res) => {
-  try {
+  editUser: async (req, res) => {
+    try {
       const { id } = req.params;
       const user = await Models.userModel.findOne({
-          where: {
-              id: id
-          }
-      })
+        where: {
+          id: id,
+        },
+      });
 
-      console.log(user, "useruser")
+      console.log(user, "useruser");
 
       res.render("users/editUserList", { user: user });
-  } catch (error) {
+    } catch (error) {
       console.error(error);
       res.status(500).send("Internal Server Error");
-  }
-},
+    }
+  },
 
-updateUser: async (req, res) => {
-  try {
+  updateUser: async (req, res) => {
+    try {
       const userId = req.params.id;
       if (!userId) {
-          return res.status(400).send("User ID is required");
+        return res.status(400).send("User ID is required");
       }
 
       const user = await Models.userModel.findOne({ where: { id: userId } });
       if (!user) {
-          return res.status(404).send("User not found");
+        return res.status(404).send("User not found");
       }
 
       let userFilePath = user.image;
       if (req.files && req.files.image) {
-          const userFile = req.files.image;
-          userFilePath = await helper.userImageUpload(userFile, "Users"); // Upload new image
+        const userFile = req.files.image;
+        userFilePath = await helper.userImageUpload(userFile, "Users"); // Upload new image
       }
 
       const updatedUser = await Models.userModel.update(
-          {
-              image: userFilePath,
-              name: req.body.name,
-              email: req.body.email,
-          },
-          { where: { id: userId } }
+        {
+          image: userFilePath,
+          name: req.body.name,
+          email: req.body.email,
+        },
+        { where: { id: userId } }
       );
 
       console.log(updatedUser, "updatedUserupdatedUser");
 
       res.redirect("/user");
-  } catch (error) {
+    } catch (error) {
       console.error(error);
       res.status(500).send("Error updating user");
-  }
-},
+    }
+  },
 
   deleteUsers: async (req, res) => {
     try {
@@ -136,7 +149,7 @@ updateUser: async (req, res) => {
       throw error;
     }
   },
-  
+
   Music: async (req, res) => {
     try {
       const musicData = await Models.musicModel.findAll();
@@ -229,59 +242,58 @@ updateUser: async (req, res) => {
 
   editMusic: async (req, res) => {
     try {
-        const { id } = req.params;
-        const music = await Models.musicModel.findOne({
-            where: {
-                id: id
-            }
-        })
-  
-        console.log(music, "musicmusic")
-  
-        res.render("music/editmusicList", { music: music });
+      const { id } = req.params;
+      const music = await Models.musicModel.findOne({
+        where: {
+          id: id,
+        },
+      });
+
+      console.log(music, "musicmusic");
+
+      res.render("music/editmusicList", { music: music });
     } catch (error) {
-        console.error(error);
-        res.status(500).send("Internal Server Error");
+      console.error(error);
+      res.status(500).send("Internal Server Error");
     }
   },
 
   updateMusic: async (req, res) => {
     try {
-        const musicId = req.params.id;
-        if (!musicId) {
-            return res.status(400).send("music ID is required");
-        }
-  
-        const music = await Models.musicModel.findOne({ where: { id: musicId } });
-        if (!music) {
-            return res.status(404).send("music not found");
-        }
-  
-        let musicFilePath = music.music;
-        if (req.files && req.files.music) {
-            const musicFile = req.files.music;
-            musicFilePath = await helper.fileUpload(musicFile, "music"); // Upload new music
-        }
-  
-        const updatedMusic = await Models.musicModel.update(
-            {
-                music: musicFilePath,
-                title: req.body.title,
-                description: req.body.description,
-            },
-            { where: { id: musicId } }
-        );
-  
-        console.log(updatedMusic, "updatedMusicupdatedMusic");
-  
-        res.redirect("/music");
+      const musicId = req.params.id;
+      if (!musicId) {
+        return res.status(400).send("music ID is required");
+      }
+
+      const music = await Models.musicModel.findOne({ where: { id: musicId } });
+      if (!music) {
+        return res.status(404).send("music not found");
+      }
+
+      let musicFilePath = music.music;
+      if (req.files && req.files.music) {
+        const musicFile = req.files.music;
+        musicFilePath = await helper.fileUpload(musicFile, "music"); // Upload new music
+      }
+
+      const updatedMusic = await Models.musicModel.update(
+        {
+          music: musicFilePath,
+          title: req.body.title,
+          description: req.body.description,
+        },
+        { where: { id: musicId } }
+      );
+
+      console.log(updatedMusic, "updatedMusicupdatedMusic");
+
+      res.redirect("/music");
     } catch (error) {
-        console.error(error);
-        res.status(500).send("Error updating music");
+      console.error(error);
+      res.status(500).send("Error updating music");
     }
   },
-  
-  
+
   Challenges: async (req, res) => {
     try {
       let challenges = await Models.challengeModel.findAll();
@@ -303,9 +315,9 @@ updateUser: async (req, res) => {
   createChallenges: async (req, res) => {
     try {
       // Destructure and validate request body
-      const { title, description} = req.body;
+      const { title, description } = req.body;
 
-      if (!title || !description ) {
+      if (!title || !description) {
         return res.status(400).json({
           success: false,
           message: "All fields (title, description) are required.",
@@ -333,7 +345,7 @@ updateUser: async (req, res) => {
     }
   },
 
- deleteChallenges: async (req, res) => {
+  deleteChallenges: async (req, res) => {
     try {
       const { id } = req.params;
       if (!id) {
@@ -354,65 +366,225 @@ updateUser: async (req, res) => {
 
   editChallenge: async (req, res) => {
     try {
-        const { id } = req.params;
-        const Challenges = await Models.challengeModel.findOne({
-            where: {
-                id: id
-            }
-        })
-  
-        console.log(Challenges, "Challenges")
-  
-        res.render("Challenges/editChallengeList", { Challenges: Challenges });
+      const { id } = req.params;
+      const Challenges = await Models.challengeModel.findOne({
+        where: {
+          id: id,
+        },
+      });
+
+      console.log(Challenges, "Challenges");
+
+      res.render("Challenges/editChallengeList", { Challenges: Challenges });
     } catch (error) {
-        console.error(error);
-        res.status(500).send("Internal Server Error");
+      console.error(error);
+      res.status(500).send("Internal Server Error");
     }
   },
-  
+
   updateChallange: async (req, res) => {
     try {
-        const challengeId = req.params.id;
-        if (!challengeId) {
-            return res.status(400).send("Challenges ID is required");
-        }
-  
-        const Challenges = await Models.challengeModel.findOne({ where: { id: challengeId } });
-        if (!Challenges) {
-            return res.status(404).send("challenge not found");
-        }
-  
-        // // let challengeFilePath = user.image;
-        // if (req.files && req.files.image) {
-        //     const userFile = req.files.image;
-        //     userFilePath = await helper.userImageUpload(userFile, "Users"); // Upload new image
-        // }
-  
-        const updatedChallenge= await Models.challengeModel.update(
-            {
-                title: req.body.title,
-                description: req.body.description,
-            },
-            { where: { id: challengeId } }
-        );
-  
-        console.log(updatedChallenge, "updatedChallengeupdatedChallenge");
-  
-        res.redirect("/Challenges");
+      const challengeId = req.params.id;
+      if (!challengeId) {
+        return res.status(400).send("Challenges ID is required");
+      }
+
+      const Challenges = await Models.challengeModel.findOne({
+        where: { id: challengeId },
+      });
+      if (!Challenges) {
+        return res.status(404).send("challenge not found");
+      }
+
+      // // let challengeFilePath = user.image;
+      // if (req.files && req.files.image) {
+      //     const userFile = req.files.image;
+      //     userFilePath = await helper.userImageUpload(userFile, "Users"); // Upload new image
+      // }
+
+      const updatedChallenge = await Models.challengeModel.update(
+        {
+          title: req.body.title,
+          description: req.body.description,
+        },
+        { where: { id: challengeId } }
+      );
+
+      console.log(updatedChallenge, "updatedChallengeupdatedChallenge");
+
+      res.redirect("/Challenges");
     } catch (error) {
-        console.error(error);
-        res.status(500).send("Error updating Challenges");
+      console.error(error);
+      res.status(500).send("Error updating Challenges");
+    }
+  },
+
+  ContactUs: async (req, res) => {
+    try {
+      let ContactUs = await Models.contactUsModel.findAll();
+      res.render("ContactUs/contactUsList", { ContactUs });
+    } catch (error) {
+      // throw error;
+      res.render("ContactUs/contactUsList", { ContactUs: [] });
+    }
+  },
+
+  addContact: async (req, res) => {
+    try {
+      res.render("contactUs/addContactList");
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  createContact: async (req, res) => {
+    try {
+      // Destructure and validate request body
+      const { name, email, message, date } = req.body;
+
+      if (!name || !email || !message || !date) {
+        return res.status(400).json({
+          success: false,
+          message: "All fields (name, email,message,date) are required.",
+        });
+      }
+
+      // Create object to save
+      const objToSave = { name, email, message,date };
+      console.log("Saving contact:", objToSave);
+
+      // Save to database
+      await Models.contactUsModel.create(objToSave);
+
+      // Respond with success
+      res.redirect("/ContactUs");
+    } catch (error) {
+      console.error("Error adding contact:", error);
+
+      // Respond with error
+      return res.status(500).json({
+        success: false,
+        message: "An error occurred while creating the contact.",
+        error: error.message,
+      });
+    }
+  },
+
+  deleteContact: async (req, res) => {
+    try {
+      const { id } = req.params;
+      if (!id) {
+        return res.status(403).json({ message: "id is required" });
+      }
+      await Models.contactUsModel.destroy({
+        where: {
+          id: id,
+        },
+      });
+      return res
+        .status(200)
+        .json({ status: 200, message: "contact deleted succesfully" });
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  editContact: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const ContactUs = await Models.contactUsModel.findOne({
+        where: {
+          id: id,
+        },
+      });
+
+      console.log(ContactUs, "ContactUs");
+
+      res.render("ContactUs/editContactList", { ContactUs: ContactUs });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Internal Server Error");
+    }
+  },
+
+  // updateContact: async (req, res) => {
+  //   try {
+  //     const contactId = req.params.id;
+  //     if (!contactId) {
+  //       return res.status(400).send("contact ID is required");
+  //     }
+
+  //     const ContactUs = await Models.contactUsModel.findOne({
+  //       where: { id: contactId },
+  //     });
+  //     if (!ContactUs) {
+  //       return res.status(404).send("ContactUs not found");
+  //     }
+
+  //     const updatedContact = await Models.contactUsModel.update(
+  //       {
+  //         name: req.body.name,
+  //         email: req.body.email,
+  //         message: req.body.message,
+
+  //         date : req.body.date,
+
+  //       },
+  //       { where: { id: contactId } }
+  //     );
+
+  //     console.log(updatedContact, "updatedContactupdatedContact");
+
+  //     res.redirect("/ContactUs");
+  //   } catch (error) {
+  //     console.error(error);
+  //     res.status(500).send("Error updating ContactUs");
+  //   }
+  // },
+
+  updateContact: async (req, res) => {
+    try {
+      const userId = req.params.id;
+      if (!userId) {
+        return res.status(400).send("userId is required");
+      }
+
+      const user = await Models.contactUsModel.findOne({
+        where: { id: userId },
+      });
+      if (!user) {
+        return res.status(404).send("user not found");
+      }
+
+      const updatedContact = await Models.contactUsModel.update(
+        {
+          name: req.body.name,
+          email: req.body.email,
+          message: req.body.message,
+          date : req.body.date,
+
+        },
+        { where: { id: userId } }
+      );
+
+      console.log(updatedContact, "updatedContactupdatedContact");
+
+      res.redirect("/ContactUs");
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error updating ContactUs");
     }
   },
 
   FAQ: async (req, res) => {
     try {
       let FAQ = await Models.faqModel.findAll();
-      res.render("FAQ/faqList",{FAQ});
+      res.render("FAQ/faqList", { FAQ });
     } catch (error) {
       throw error;
     }
   },
+
   addFaq: async (req, res) => {
     try {
       res.render("FAQ/addFaqList");
@@ -424,9 +596,9 @@ updateUser: async (req, res) => {
   createFaq: async (req, res) => {
     try {
       // Destructure and validate request body
-      const { Question, Answer} = req.body;
+      const { Question, Answer } = req.body;
 
-      if (!Question || !Answer ) {
+      if (!Question || !Answer) {
         return res.status(400).json({
           success: false,
           message: "All fields (title, description) are required.",
@@ -475,53 +647,51 @@ updateUser: async (req, res) => {
 
   editFaq: async (req, res) => {
     try {
+      // const id = req.params.id
+      const { id } = req.params;
+      const FAQ = await Models.faqModel.findOne({
+        where: {
+          id: id,
+        },
+      });
 
-        const { id } = req.params;
-        const FAQ = await Models.faqModel.findOne({
-            where: {
-                id: id
-            }
-        })
-  
-        console.log(FAQ, "FAQ")
-  
-        res.render("FAQ/ediTFaqList", { FAQ: FAQ });
+      console.log(FAQ, "FAQ");
+
+      res.render("FAQ/ediTFaqList", { FAQ: FAQ });
     } catch (error) {
-        console.error(error);
-        res.status(500).send("Internal Server Error");
+      console.error(error);
+      res.status(500).send("Internal Server Error");
     }
   },
 
   updateFaq: async (req, res) => {
     try {
-        const faqId = req.params.id;
-        if (!faqId) {
-            return res.status(400).send("faq ID is required");
-        }
-  
-        const FAQ = await Models.faqModel.findOne({ where: { id: faqId } });
-        if (!FAQ) {
-            return res.status(404).send("faq not found");
-        }
-  
-  
-        const updatedFaq= await Models.faqModel.update(
-            {
-                Question: req.body.Question,
-                Answer: req.body.Answer,
-            },
-            { where: { id: faqId } } 
-        );
-  
-        console.log(updatedFaq, "updatedFaqupdatedFaq");
-  
-        res.redirect("/FAQ");
+      const faqId = req.body.id;
+      if (!faqId) {
+        return res.status(400).send("faq ID is required");
+      }
+
+      const FAQ = await Models.faqModel.findOne({ where: { id: faqId } });
+      if (!FAQ) {
+        return res.status(404).send("faq not found");
+      }
+
+      const updatedFaq = await Models.faqModel.update(
+        {
+          Question: req.body.Question,
+          Answer: req.body.Answer,
+        },
+        { where: { id: faqId } }
+      );
+
+      console.log(updatedFaq, "updatedFaqupdatedFaq");
+
+      res.redirect("/FAQ");
     } catch (error) {
-        console.error(error);
-        res.status(500).send("Error updating faq");
+      console.error(error);
+      res.status(500).send("Error updating faq");
     }
   },
-
 
   contactUs: async (req, res) => {
     try {
@@ -590,61 +760,92 @@ updateUser: async (req, res) => {
 
   editBanner: async (req, res) => {
     try {
-        const { id } = req.params;
-        const Banner = await Models.bannerModel.findOne({
-            where: {
-                id: id
-            }
-        })
-  
-        console.log(Banner, "Banner")
-  
-        res.render("Banners/editBannerList", { Banner: Banner });
+      const { id } = req.params;
+      const Banner = await Models.bannerModel.findOne({
+        where: {
+          id: id,
+        },
+      });
+
+      console.log(Banner, "Banner");
+
+      res.render("Banners/editBannerList", { Banner: Banner });
     } catch (error) {
-        console.error(error);
-        res.status(500).send("Internal Server Error");
+      console.error(error);
+      res.status(500).send("Internal Server Error");
     }
   },
-  
+
   updateBanner: async (req, res) => {
     try {
-        const bannerId = req.params.id;
-        if (!bannerId) {
-            return res.status(400).send("Banner ID is required");
-        }
-  
-        const Banner = await Models.bannerModel.findOne({ where: { id: bannerId } });
-        if (!Banner) {
-            return res.status(404).send("Banner not found");
-        }
-  
-        let bannerFilePath = Banner.image;
-        if (req.files && req.files.image) {
-            const bannerFile = req.files.image;
-            bannerFilePath = await helper.bannerImageUpload(bannerFile, "banner"); // Upload new image
-        }
-  
-        const updatedBanner= await Models.bannerModel.update(
-            {
-              image: bannerFilePath,
+      const bannerId = req.params.id;
+      if (!bannerId) {
+        return res.status(400).send("Banner ID is required");
+      }
 
-            },
-            { where: { id: bannerId } }
-        );
-  
-        console.log(updatedBanner, "updatedBannerpdatedBanner");
-  
-        res.redirect("/Banners");
+      const Banner = await Models.bannerModel.findOne({
+        where: { id: bannerId },
+      });
+      if (!Banner) {
+        return res.status(404).send("Banner not found");
+      }
+
+      let bannerFilePath = Banner.image;
+      if (req.files && req.files.image) {
+        const bannerFile = req.files.image;
+        bannerFilePath = await helper.bannerImageUpload(bannerFile, "banner"); // Upload new image
+      }
+
+      const updatedBanner = await Models.bannerModel.update(
+        {
+          image: bannerFilePath,
+        },
+        { where: { id: bannerId } }
+      );
+
+      console.log(updatedBanner, "updatedBannerpdatedBanner");
+
+      res.redirect("/Banners");
     } catch (error) {
-        console.error(error);
-        res.status(500).send("Error updating Banner");
+      console.error(error);
+      res.status(500).send("Error updating Banner");
     }
   },
-
 
   TermConditions: async (req, res) => {
     try {
-      res.render("Terms&Conditions/termConditionsList");
+      let termsData = await Models.cmsModel.findOne({ where: { type: 1 } });
+      console.log("termsData", termsData);
+      res.render("Terms&Conditions/termConditionsList", { termsData });
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  updateTermConditions: async (req, res) => {
+    try {
+      const { id, description } = req.body;
+
+      const findcms = await Models.cmsModel.findOne({
+        where: {
+          type: 1,
+        },
+      });
+
+      if (findcms) {
+        const updated = await Models.cmsModel.update(
+          { description: description },
+          { where: { type: 1 } }
+        );
+      } else {
+        await Models.cmsModel.create({
+          title: "Terms & Conditions",
+          description: description,
+          type: 1,
+        });
+      }
+
+      res.redirect("/TermConditions");
     } catch (error) {
       throw error;
     }
@@ -652,7 +853,38 @@ updateUser: async (req, res) => {
 
   PrivacyPolicy: async (req, res) => {
     try {
-      res.render("PrivacyPolicy/privacyPolicy");
+      let privacyData = await Models.cmsModel.findOne({ where: { type: 2 } });
+
+      res.render("PrivacyPolicy/privacyPolicyList", { privacyData });
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  updatePrivacyPolicy: async (req, res) => {
+    try {
+      const { id, description } = req.body;
+
+      const findcms = await Models.cmsModel.findOne({
+        where: {
+          type: 2,
+        },
+      });
+
+      if (findcms) {
+        const updated = await Models.cmsModel.update(
+          { description: description },
+          { where: { type: 2 } }
+        );
+      } else {
+        await Models.cmsModel.create({
+          title: "PrivacyPolicy",
+          description: description,
+          type: 2,
+        });
+      }
+
+      res.redirect("/PrivacyPolicy");
     } catch (error) {
       throw error;
     }
@@ -660,10 +892,52 @@ updateUser: async (req, res) => {
 
   aboutUs: async (req, res) => {
     try {
-      res.render("aboutUs/aboutUsList");
+      let aboutData = await Models.cmsModel.findOne({ where: { type: 3 } });
+      console.log("aboutData", aboutData);
+      res.render("aboutUs/aboutUsList", { aboutData });
     } catch (error) {
       throw error;
     }
+  },
+
+  updateAboutUs: async (req, res) => {
+    try {
+      const { id, description } = req.body;
+
+      const findcms = await Models.cmsModel.findOne({
+        where: {
+          type: 3,
+        },
+      });
+
+      if (findcms) {
+        const updated = await Models.cmsModel.update(
+          { description: description },
+          { where: { type: 3 } }
+        );
+      } else {
+        await Models.cmsModel.create({
+          title: "About Us",
+          description: description,
+          type: 3,
+        });
+      }
+
+      res.redirect("/aboutUs");
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  test: async (req, res) => {
+    try {
+      let objToSave = {
+        type: 3,
+        title: "About Us",
+        description: "hfds",
+      };
+      await Models.cmsModel.create(objToSave);
+    } catch (error) {}
   },
 
 };

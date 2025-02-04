@@ -1,70 +1,62 @@
-<%- include("./partials/header.ejs");%>
 
-    <div class="cards">
-      <div class="card user-card">
-        <i class="fas fa-users" style="font-size: 40px; color: white;"></i>
-        <a href="/user" style="text-decoration: none;">
-        <center><h3 style="color: black;"> Users</h3></center>
-        <center><p style="color: black;">1200</p></center>
-        </a>
-      </div>
-      
-      <div class="card category-card">
+<%- include("./partials/header.ejs"); %>
 
-        <i class="fa-solid fa-music" style="font-size: 40px; color: white;"></i>
-        <a href="/Music" style="text-decoration: none;">
-
-        <center><h3 style="color: black;">Music</h3></center>
-        
-        <center><p style="color: black;">3</p></center>
-      </a>
-
-      </div>
-      <div class="card subcategory-card">
-        
-        <i class="fas fa-flag" style="font-size: 40px; color: white;"></i>
-        <a href="/Challenges" style="text-decoration: none;">
-
-        <center><h3 style="color: black;">Challenges</h3></center>
-
-        <center><p style="color: black;">5</p></center>
-        </a>
-      </div>
-      <div class="card product-card">
-        <i class="fas fa-envelope" style="font-size: 40px; color: white;"></i>
-        <a href="/contactUs" style="text-decoration: none;">
-
-        <center><h3 style="color: black;">Contact Us</h3></center>
-        <center><p style="color: black;">2</p></center>
-        </a>
-      </div>
-      <div class="card settings-card">
-        <i class="fas fa-question-circle" style="font-size: 40px; color: white;"></i>
-        <a href="/FAQ" style="text-decoration: none;">          
-
-        <center><h3 style="color: black;">FAQ</h3></center>
-        <center><p style="color: black;">6</p></center>
-        </a>
-      </div>
-      <div class="card help-card">
-        <i class="fas fa-images" style="font-size: 40px; color: white;"></i>
-        <a href="/Banner" style="text-decoration: none;">          
-
-        <center><h3 style="color: black;">Banner</h3></center>
-        <center><p style="color: black;">7</p></center>
-
-      </a>
-        </div>
-
-
-</div>
-      </div>
-    </div>
+<div class="cards">
+  <div class="card user-card">
+    <i class="fas fa-users" style="font-size: 40px; color: white;"></i>
+    <a href="/user" style="text-decoration: none;">
+      <center><h3 style="color: black;">Users</h3></center>
+      <center><p style="color: black;"><%= userCount %></p></center>
+    </a>
   </div>
-  <!-- <style>
 
-   
-  </style> -->
+  <div class="card category-card">
+    <i class="fa-solid fa-music" style="font-size: 40px; color: white;"></i>
+    <a href="/Music" style="text-decoration: none;">
+      <center><h3 style="color: black;">Music</h3></center>
+      <center><p style="color: black;"><%= musicCount %></p></center>
+    </a>
+  </div>
+
+  <div class="card subcategory-card">
+    <i class="fas fa-flag" style="font-size: 40px; color: white;"></i>
+    <a href="/Challenges" style="text-decoration: none;">
+      <center><h3 style="color: black;">Challenges</h3></center>
+      <center><p style="color: black;"><%= challengeCount %></p></center>
+    </a>
+  </div>
 
 
-<%- include("./partials/footer.ejs");%>
+  <div class="card settings-card">
+    <i class="fas fa-question-circle" style="font-size: 40px; color: white;"></i>
+    <a href="/FAQ" style="text-decoration: none;">
+      <center><h3 style="color: black;">FAQ</h3></center>
+      <center><p style="color: black;"><%= faqCount %></p></center>
+    </a>
+  </div>
+
+  <div class="card product-card">
+    <i class="fas fa-envelope" style="font-size: 40px; color: white;"></i>
+    <a href="/contactUs" style="text-decoration: none;">
+      <center><h3 style="color: black;">Contact Us</h3></center>
+      <center><p style="color: black;"><%= contactCount %></p></center>
+    </a>
+  </div>
+
+
+  <div class="card help-card">
+    <i class="fas fa-images" style="font-size: 40px; color: white;"></i>
+    <a href="/Banner" style="text-decoration: none;">
+      <center><h3 style="color: black;">Banner</h3></center>
+      <center><p style="color: black;"><%= bannerCount %></p></center>
+    </a>
+  </div>
+  
+</div>
+<style>
+  h3{
+    text-align: center;
+  }
+</style>
+
+<%- include("./partials/footer.ejs"); %>

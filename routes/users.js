@@ -32,9 +32,16 @@ router.get("/addFaq",controller.addFaq);
 router.post("/createFaq",controller.createFaq);
 router.delete("/deleteFaq/:id",controller.deleteFaq);
 router.get("/editFaq/:id",controller.editFaq);
-router.post("/updateFaq/:id",controller.updateFaq);
+router.post("/updateFaq",controller.updateFaq);
 
-router.get("/contactUs", controller.contactUs);
+router.get("/ContactUs", controller.ContactUs);
+router.get("/addContact",controller.addContact);
+router.post("/createContact",controller.createContact);
+router.delete("/deleteContact/:id",controller.deleteContact);
+router.get("/editContact/:id",controller.editContact);
+router.post("/updateContact/:id",controller.updateContact);
+
+
 
 router.get("/Banner", controller.Banner);
 router.get("/addBanner",controller.addBanner);
@@ -46,7 +53,14 @@ router.post("/updateBanner/:id",controller.updateBanner);
 
 
 router.get("/TermConditions", controller.TermConditions);
+router.post("/updateTermConditions",controller.updateTermConditions);
+
 router.get("/PrivacyPolicy", controller. PrivacyPolicy);
+router.post("/updatePrivacyPolicy",controller.updatePrivacyPolicy);
+
 router.get("/aboutUs", controller. aboutUs);
+
+router.post("/updateAboutUs",controller.updateAboutUs);
+router.get("/test",controller.test);
 
 module.exports = router;

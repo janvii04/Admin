@@ -12,7 +12,7 @@
   </div>
 
   <form
-    action="/updateFaq/<%= FAQ.id %>"
+    action="/updateFaq"
     method="post"
     enctype="multipart/form-data"
   >
@@ -20,10 +20,10 @@
 
    
     <h3>Question:</h3>
-    <input type="text" name="title" value="<%= FAQ.Question %>" />
+    <input type="text" name="Question" value="<%= FAQ.Question %>" />
 
     <h3>Answer:</h3>
-    <input type="text" name="description" value="<%= FAQ.Answer %>" />
+    <input type="text" name="Answer" value="<%= FAQ.Answer %>" />
 
     <button type="submit">Update</button>
   </form>
